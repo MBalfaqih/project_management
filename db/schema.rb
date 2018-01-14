@@ -15,14 +15,15 @@ ActiveRecord::Schema.define(version: 20180114071008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "users", force: :cascade do |t|
+  create_table "companies", force: :cascade do |t|
     t.string "username"
+    t.string "company_name"
     t.string "email"
     t.string "token"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["token"], name: "index_users_on_token", unique: true
+    t.index ["token"], name: "index_companies_on_token", unique: true
   end
 
 end
