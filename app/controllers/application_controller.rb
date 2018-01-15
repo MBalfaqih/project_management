@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   include Response
 
+
     def require_login
       authenticate_token || json_response(message: "access denied , You are NOT logged in yet" , status: 401 )
     end

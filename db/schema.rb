@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20180114071008) do
     t.string "email"
     t.string "token"
     t.string "password_digest"
+    t.string "password_reset_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_companies_on_token", unique: true

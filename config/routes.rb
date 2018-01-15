@@ -1,13 +1,28 @@
 Rails.application.routes.draw do
   
 
-  #get 'api/v1/sessions/index'
 
-  namespace 'api' do
-    namespace 'v1' do
-      resources :sessions , only: [:create , :destroy ]
+  namespace 'v1' do
+    namespace 'company' do
+      resource :sessions , only: [:create , :destroy ]
+      resources :companies , only: [:create , :index ]
+      resource :passwords , only: [:forgot , :recover] do 
+        post :forgot  #,  on: :collection
+        put :recover #, on: :member
+      end
     end
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+
+# Company.find_by(password_reset_link: params[:password_reset_link])
+
+# # com = Company.find_by(email: params[:email])
+# # if com 
+
+
+#   def reset_lin
+#     self.password_reset_link = regen    
+#     save
+#   end
