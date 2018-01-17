@@ -3,7 +3,7 @@ class V1::Company::PasswordsController < ApplicationController
 
     def forgot
         if !email = params[:email]
-            return render_failed( message: 'Email not present' , status: :not_found )
+            return render_failed message: 'Email not present' , status: :not_found
         end
 
         @company = ::Company.find_by(
@@ -12,9 +12,9 @@ class V1::Company::PasswordsController < ApplicationController
         if @company 
             @company.generate_password_token
             CompanyMailer.recover_password_email(@company , @company.password_reset_token).deliver_now
-            render_success({ message: "Please check your e-mail and click the verification link we sent"  })
+            render_success message: "Please check your e-mail and click the verification link we sent" 
         else
-            render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
+            render_failed message: 'Email address not found. Please check it and try again.' , status: :not_found
         end
     end
 
@@ -24,14 +24,12 @@ class V1::Company::PasswordsController < ApplicationController
         @company = ::Company.find_by(password_reset_token: token)
         if @company
             if @company.reset_password( params[:password] , params[:password_confirmation])
-                render_success( message: "Your password changed successfully" , data: @company )
+                render_success message: "Your password changed successfully" , data: @company 
             else
-                render_failed( message: @company.errors.full_messages , status: :unprocessable_entity)
+                render_failed message: @company.errors.full_messages , status: :unprocessable_entity
             end
-        # elsif  !@company.authenticate(params[:old_password])
-        #     render_failed( message: "The old password is wrong, please re-enter it coorectly" , status: :unauthorized)
         else
-            render_failed( message: "Link not valid or expired. Try generating a new link" , status: 404)
+            render_failed message: "Link not valid or expired. Try generating a new link" , status: 404
         end
 
     end
@@ -42,9 +40,9 @@ class V1::Company::PasswordsController < ApplicationController
         if  current_company.authenticate(params[:old_password])
             current_company.reset_password(params[:password], params[:password_confirmation])
             CompanyMailer.password_change_alert(@current_company).deliver_now
-            render_success({message: "Your password changed successfully" })
+            render_success message: "Your password changed successfully"
         else
-            render_failed(message: "Your old password is not correct", status: :unauthorized)
+            render_failed message: "Your old password is not correct", status: :unauthorized
         end
     end
   
