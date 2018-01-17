@@ -22,6 +22,10 @@ ActiveRecord::Schema.define(version: 20180114071008) do
     t.string "token"
     t.string "password_digest"
     t.string "password_reset_token"
+    t.string "logo_file_name"
+    t.string "logo_content_type"
+    t.integer "logo_file_size"
+    t.datetime "logo_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_companies_on_token", unique: true

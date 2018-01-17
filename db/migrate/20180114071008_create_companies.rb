@@ -1,4 +1,4 @@
-class CreateUsers < ActiveRecord::Migration[5.1]
+class CreateCompanies < ActiveRecord::Migration[5.1]
   def up
     create_table :companies do |t|
       t.string :username
@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :token
       t.string :password_digest
       t.string :password_reset_token
-
+      t.attachment :logo
       t.timestamps
     end
     add_index :companies, :token, unique: true

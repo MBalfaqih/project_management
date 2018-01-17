@@ -2,7 +2,7 @@ class V1::Company::CompaniesController < ApplicationController
 
     def index
         companies = ::Company.order(id: :ASC)
-        json_response(companies)
+        render_success(data: companies)
     end
 
     def create
@@ -10,15 +10,15 @@ class V1::Company::CompaniesController < ApplicationController
         if @company.save
             CompanyMailer.welcome_email(@company).deliver_now
             @company.regenerate_token
-            json_response({ Message: "You successfully signed in" , token: @company.token })
+            render_success( message: "You successfully signed in" , data: @company )
         else
-            json_response(Message: "Something went wrong! ,make sure that you enter the same password or you have unique username & email ")
+            render_failed( data: @company.errors.full_messages )
         end
     end
 
     private 
     def company_params
-        params.permit(:company_name , :username , :email , :password , :password_confirmation ) ### /LOGO
+        params.permit(:company_name, :username, :email, :logo, :password, :password_confirmation )
     end
 
 end
