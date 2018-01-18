@@ -18,5 +18,14 @@
 # slmh 313238 h 1000 K
 # slmh 313240 h 1000 K
 # slmh 310599 n 2500 K
-#
-#
+# blbheeth 325006 n 10000 K
+# gflh 351950 650 n B
+# slmh 309891 1100 n B  
+# slmh 320952 3300 n K
+shbkh  
+shbkh  
+shbkh  
+shbkh 
+slmh 316018 1100 N K
+hany 303392 1100 h K
+Basth 309732 + 2000 K 
