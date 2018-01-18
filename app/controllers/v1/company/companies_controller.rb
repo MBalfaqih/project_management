@@ -1,4 +1,6 @@
 class V1::Company::CompaniesController < ApplicationController
+    
+    before_action :require_login , except: :create 
 
     def index
         companies = ::Company.order(id: :ASC)
@@ -13,6 +15,14 @@ class V1::Company::CompaniesController < ApplicationController
             render_success( message: "You successfully signed in" , data: @company )
         else
             render_failed( data: @company.errors.full_messages )
+        end
+    end
+
+    def update
+        if current_company.update_attributes(company_params)
+            render_success message: "your profile updated successfully" ,data: current_company
+        else
+            render_failed message: current_company.errors.full_messages ,status: :unprocessable_entity
         end
     end
 

@@ -3,9 +3,9 @@ class V1::Company::SessionsController < ApplicationController
   before_action :require_login , except: :create 
 
   def create
-    if company = ::Company.valid_login?(params[:email] , params[:password])
+    if company = valid_login?(params[:email] , params[:password])
       company.regenerate_token
-      render_success( message: "You logged in successfully"  , data: company.token)
+      render_success( message: "You logged in successfully"  , data: company)
     else
       render_failed( message: "Invalid E-mail or password" , status: :unauthorized)
     end
@@ -23,8 +23,8 @@ class V1::Company::SessionsController < ApplicationController
     current_company.update_columns(token: nil)
   end
   
-  def self.valid_login?(login_info , password)
-  company = Company.find_by(
+  def valid_login?(login_info , password)
+  company = ::Company.find_by(
     login_info.include?("@") ? {email: login_info} : {username: login_info}
     )
     # company = Company.where(email: login_info).or(Company.where(username: login_info )).first

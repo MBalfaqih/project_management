@@ -48,7 +48,7 @@ class Company < ApplicationRecord
     update_attributes(password: password , password_confirmation: password_confirmation)
   end
 
-
+  
   private
 
   def generate_token

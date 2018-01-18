@@ -21,12 +21,13 @@ class V1::Company::PasswordsController < ApplicationController
 
     def  recover
         token = params[:token]
-        @company = ::Company.find_by(password_reset_token: token)
-        if @company
-            if @company.reset_password( params[:password] , params[:password_confirmation])
-                render_success message: "Your password changed successfully" , data: @company 
+        company = ::Company.find_by(password_reset_token: token)
+        if company
+            if company.reset_password( params[:password] , params[:password_confirmation])
+                company.regenerate_token
+                render_success message: "Your password changed successfully" , data: company 
             else
-                render_failed message: @company.errors.full_messages , status: :unprocessable_entity
+                render_failed message: company.errors.full_messages , status: :unprocessable_entity
             end
         else
             render_failed message: "Link not valid or expired. Try generating a new link" , status: 404
@@ -38,9 +39,12 @@ class V1::Company::PasswordsController < ApplicationController
     def update
 
         if  current_company.authenticate(params[:old_password])
-            current_company.reset_password(params[:password], params[:password_confirmation])
-            CompanyMailer.password_change_alert(@current_company).deliver_now
-            render_success message: "Your password changed successfully"
+            if  current_company.reset_password(params[:password], params[:password_confirmation])
+                CompanyMailer.password_change_alert(current_company).deliver_now
+                render_success message: "Your password changed successfully"
+            else
+                render_failed message: current_company.errors.full_messages , status: :unprocessable_entity
+            end
         else
             render_failed message: "Your old password is not correct", status: :unauthorized
         end

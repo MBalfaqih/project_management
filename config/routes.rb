@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
     namespace 'company' do
       resource :sessions , only: [:create , :destroy ]
-      resources :companies , only: [:create , :index ]
+      resources :companies , only: [:create , :index ,:update ]
       resource :passwords , only: [:forgot , :recover , :update] do 
         post :forgot  #,  on: :collection
         put :recover #, on: :member
