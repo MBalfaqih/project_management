@@ -14,13 +14,13 @@
 
 class Company < ApplicationRecord
 
+  has_many :employees
+  has_many :projects
+
   has_secure_password   validations: false 
   has_secure_token
-  
   validates_confirmation_of :password
-
   validates :company_name , presence: true 
-
   validates :username , length: { maximum: 20 },
                         presence: true  ,
                         uniqueness: true
@@ -37,6 +37,7 @@ class Company < ApplicationRecord
                          size:         { :in => 0..100.kilobytes }
 
                          
+
                          
   def generate_password_token
     self.password_reset_token = generate_token
@@ -54,9 +55,5 @@ class Company < ApplicationRecord
   def generate_token
     SecureRandom.hex(10)
   end
-
-  # def password_params
-  #   params.permit(:password, :password_confirmation)
-  # end
 
 end

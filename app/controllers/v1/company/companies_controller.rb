@@ -1,10 +1,18 @@
 class V1::Company::CompaniesController < ApplicationController
     
-    before_action :require_login , except: :create 
+    before_action :require_login , except: [:create , :index]
 
     def index
         companies = ::Company.order(id: :ASC)
         render_success(data: companies)
+    end
+
+    def show
+        if company = ::Company.where(id: params[:id]).first
+            render_success(data: company)
+        else
+            render_failed(message: "There is no company with id #{params[:id]}" , status: 404)
+        end
     end
 
     def create

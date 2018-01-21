@@ -5,13 +5,22 @@ Rails.application.routes.draw do
   namespace 'v1' do
 
     namespace 'company' do
+      
       resource :sessions , only: [:create , :destroy ]
-      resources :companies , only: [:create , :index ,:update ]
+      
+      resources :companies , only: [:create , :index , :show , :update ] do
+        resources :projects
+        resources :employees
+      end
+
       resource :passwords , only: [:forgot , :recover , :update] do 
         post :forgot  #,  on: :collection
         put :recover #, on: :member
       end
     end
+
+    # namespace 'projects' do
+    # end
     
   end
 
