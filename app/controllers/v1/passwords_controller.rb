@@ -1,4 +1,4 @@
-class V1::Company::PasswordsController < ApplicationController
+class V1::PasswordsController < ApplicationController
     before_action :require_login , except: [ :forgot , :recover ]
 
     def forgot
@@ -6,7 +6,7 @@ class V1::Company::PasswordsController < ApplicationController
             return render_failed message: 'Email not present' , status: :not_found
         end
 
-        @company = ::Company.find_by(
+        @company = Company.find_by(
             email.include?("@") ? { email: email } : { username: email } )
 
         if @company 
@@ -21,7 +21,7 @@ class V1::Company::PasswordsController < ApplicationController
 
     def  recover
         token = params[:token]
-        company = ::Company.find_by(password_reset_token: token)
+        company = Company.find_by(password_reset_token: token)
         if company
             if company.reset_password( params[:password] , params[:password_confirmation])
                 company.regenerate_token

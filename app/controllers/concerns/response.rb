@@ -1,9 +1,7 @@
 module Response
-    # def json_response( object , status = :ok )
-    #         render json: object , status: status
-    # end
-
-    def render_success(message: "Success", data: nil, status: :ok)
+    
+    def render_success(message: 'success', data: nil, status: :ok)
+        # message = data.nil? ? "no record founds" : "success"
 
         render json: {
                         success: true,
@@ -14,7 +12,7 @@ module Response
     end
     
       def render_failed(message: "Failed", data: nil, status: :unprocessable_entity)
-    
+        
         render json: {
                         success: false,
                         message: message,

@@ -1,4 +1,4 @@
-class V1::Company::SessionsController < ApplicationController
+class V1::SessionsController < ApplicationController
 
   before_action :require_login , except: :create 
 
@@ -24,7 +24,7 @@ class V1::Company::SessionsController < ApplicationController
   end
   
   def valid_login?(login_info , password)
-  company = ::Company.find_by(
+  company = Company.find_by(
     login_info.include?("@") ? {email: login_info} : {username: login_info}
     )
     # company = Company.where(email: login_info).or(Company.where(username: login_info )).first

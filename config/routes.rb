@@ -4,36 +4,26 @@ Rails.application.routes.draw do
 
   namespace 'v1' do
 
-    namespace 'company' do
       
-      resource :sessions , only: [:create , :destroy ]
-      
-      resources :companies , only: [:create , :index , :show , :update ] do
-        resources :projects
-        resources :employees
-      end
-
-      resource :passwords , only: [:forgot , :recover , :update] do 
-        post :forgot  #,  on: :collection
-        put :recover #, on: :member
-      end
+    resource :sessions , only: [:create , :destroy ]
+    
+    resource :companies , only: [:create , :show , :update ] do
     end
 
-    # namespace 'projects' do
-    # end
+    resources :employees do 
+      get :get_employee_projects , on: :member 
+      put :edit_employee_projects , on: :member
+    end 
+    resources :projects do
+      get :get_project_employees , on: :member
+      put :edit_project_employees , on: :member
+    end
     
+    resource :passwords , only: [:forgot , :recover , :update] do 
+      post :forgot  #,  on: :collection
+      put :recover #, on: :member
+    end
+
   end
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
-
-# Company.find_by(password_reset_link: params[:password_reset_link])
-
-# # com = Company.find_by(email: params[:email])
-# # if com 
-
-
-#   def reset_lin
-#     self.password_reset_link = regen    
-#     save
-#   end

@@ -1,6 +1,8 @@
 class Employee < ApplicationRecord
     
     belongs_to :company
+    has_many :project_enrollments
+    has_many :projects , through: :project_enrollments
 
     validates :name , :joining_date , :birth_date , presence: true
     validate :must_be_over_twenty   
