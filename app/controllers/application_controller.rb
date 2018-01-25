@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::API
  
   include Response
-
+  include ExceptionHandler
+  
     def require_login
       authenticate_token || render_failed(message: "access denied , You are NOT logged in yet" , status: 401 )
     end

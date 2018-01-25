@@ -5,12 +5,12 @@ class V1::EmployeesController < ApplicationController
     
 
     def index
-        render_success(data: current_company.employees)
+        render_success(data: ActiveModel::Serializer::CollectionSerializer.new(current_company.employees, serializer: V1::EmployeeSerializer))
     end
 
   
     def show
-        return render_success(data: @employee) if @employee
+        return render_success(data: V1::EmployeeSerializer.new(@employee)) if @employee
         render_failed(message: "You don't have record with id #{params[:id]}")
     end
 
@@ -18,7 +18,7 @@ class V1::EmployeesController < ApplicationController
     def create
         employee = Employee.new(employee_params)
         if current_company.employees << employee
-            render_success( message: "A new employee has been registered" , data: employee )
+            render_success( message: "A new employee has been registered" , data: V1::EmployeeSerializer.new(employee) )
         else
             render_failed( data: employee.errors.full_messages )
         end
@@ -28,7 +28,7 @@ class V1::EmployeesController < ApplicationController
     def update
         if @employee
             @employee.update!(employee_params)
-            render_success( message: " #{@employee.name} has been updated successfully " , data: @employee)
+            render_success( message: " #{@employee.name} has been updated successfully " , data: V1::EmployeeSerializer.new(@employee))
         else
             render_failed(message: "There is no employee with id #{params[:id]}" , status: 404)
         end
@@ -44,13 +44,13 @@ class V1::EmployeesController < ApplicationController
         end
     end
 
-    def get_employee_projects
-        render_success(data: @employee.projects)
-    end
+    # def get_employee_projects
+    #     render_success(data: @employee.projects)
+    # end
 
-    def edit_employee_projects
-        ###
-    end
+    # def edit_employee_projects
+    #     ###
+    # end
 
     
     private 

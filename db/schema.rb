@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121154919) do
+ActiveRecord::Schema.define(version: 20180124155820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(version: 20180121154919) do
     t.index ["company_id"], name: "index_employees_on_company_id"
   end
 
-  create_table "project_enrollments", force: :cascade do |t|
+  create_table "employees_projects", force: :cascade do |t|
     t.integer "employee_id"
     t.integer "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["employee_id", "project_id"], name: "index_project_enrollments_on_employee_id_and_project_id"
+    t.index ["employee_id", "project_id"], name: "index_employees_projects_on_employee_id_and_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -58,4 +58,19 @@ ActiveRecord::Schema.define(version: 20180121154919) do
     t.index ["company_id"], name: "index_projects_on_company_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "status"
+    t.bigint "project_id"
+    t.bigint "assignee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+    t.index ["project_id", "assignee_id"], name: "index_tasks_on_project_id_and_assignee_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+  end
+
+  add_foreign_key "tasks", "employees", column: "assignee_id"
+  add_foreign_key "tasks", "projects"
 end
