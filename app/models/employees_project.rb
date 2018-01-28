@@ -4,6 +4,7 @@ class EmployeesProject < ApplicationRecord
 
     def self.delete_unchecked_projects(unchecked_ids , employee_id)
         # unchecked_ids = @employee.project_ids - @updated_ids
+        ####
         unchecked_ids.each { |id|  EmployeesProject.where(employee_id: employee_id ).where(project_id: id ).first.destroy }
     end
 
@@ -12,7 +13,6 @@ class EmployeesProject < ApplicationRecord
     end
 
     def self.delete_unchecked_employees(unchecked_ids , project_id)
-        # unchecked_ids = @employee.project_ids - @updated_ids
         unchecked_ids.each { |id|  EmployeesProject.where(project_id: project_id ).where(employee_id: id ).first.destroy }
     end
 

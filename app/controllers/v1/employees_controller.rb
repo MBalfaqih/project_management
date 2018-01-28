@@ -37,6 +37,7 @@ class V1::EmployeesController < ApplicationController
 
     def destroy
         if @employee
+            ## set all his task to nil  ( nullify ) &&& when uncheck pro , what happen to task
             @employee.destroy! 
             render_success(message: "#{@employee.name} deleted successfully " )
         else
@@ -44,15 +45,6 @@ class V1::EmployeesController < ApplicationController
         end
     end
 
-    # def get_employee_projects
-    #     render_success(data: @employee.projects)
-    # end
-
-    # def edit_employee_projects
-    #     ###
-    # end
-
-    
     private 
 
     def employee_params

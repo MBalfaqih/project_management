@@ -26,6 +26,8 @@ class V1::TasksController < ApplicationController
         render_success(message: "#{@task.name} deleted succesfully " )
     end
   
+
+    
     private
 
     def task_params

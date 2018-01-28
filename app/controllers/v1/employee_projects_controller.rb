@@ -19,7 +19,6 @@ class V1::EmployeeProjectsController < ApplicationController
     end
 
 
-
     private
 
     def set_selected_employee

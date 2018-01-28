@@ -2,8 +2,8 @@ class Employee < ApplicationRecord
     
     belongs_to :company
     has_many :employees_projects
-    has_many :projects , through: :employees_projects
-    has_many :tasks , foreign_key: "assignee_id"
+    has_many :projects , through: :employees_projects 
+    has_many :tasks , foreign_key: "assignee_id" , dependent: :nullify
 
 
     validates :name , :joining_date , :birth_date , presence: true
@@ -13,10 +13,8 @@ class Employee < ApplicationRecord
 
     private
     def must_be_over_twenty
-        if birth_date.present?
-            if birth_date > 20.years.ago
+        if birth_date.present? && (birth_date > 20.years.ago)
                 errors.add( :base , " Employee age must be over twenty")
-            end
         end
     end
 end

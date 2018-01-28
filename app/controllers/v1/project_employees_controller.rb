@@ -13,7 +13,6 @@ class V1::ProjectEmployeesController < ApplicationController
             return render_failed(message: " Invalid IDs assigned " , status: :unprocessable_entity ) if assigning_invalid_ids == true  
             EmployeesProject.delete_unchecked_employees(@unchecked_ids , params[:project_id] )     if @unchecked_ids = @project.employee_ids - @updated_ids 
             EmployeesProject.assign_new_checked_employees(@new_assigned_ids , params[:project_id] ) if @new_assigned_ids = @updated_ids - @project.employee_ids
-            # debugger
             render_success(message: "project employees has been updated successfully" ,data: V1::ProjectSerializer.new(Project.find(params[:project_id])) )
         #else render_failed(message: "no parameter found") 
         end
