@@ -5,7 +5,7 @@ class V1::ProjectsController < ApplicationController
 
     
     def index
-        render_success(data: ActiveModel::Serializer::CollectionSerializer.new(current_company.projects, serializer: V1::ProjectSerializer))
+        render_success(data: collection_serializer( current_company.projects.order(:id), V1::ProjectSerializer ))
     end
 
 

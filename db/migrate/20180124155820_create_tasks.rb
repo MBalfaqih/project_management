@@ -13,5 +13,5 @@ class CreateTasks < ActiveRecord::Migration[5.1]
 
   def down
     drop_table :tasks
-
+  end
 end

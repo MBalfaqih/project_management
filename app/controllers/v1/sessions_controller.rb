@@ -12,16 +12,13 @@ class V1::SessionsController < ApplicationController
   end
 
   def destroy
-    logout
+    Company.logout(current_company)
     render_success( message: "logged out" , data: "https://example.com/login")
   end
 
 
   private
 
-  def logout
-    current_company.update_columns(token: nil)
-  end
   
   def valid_login?(login_info , password)
   company = Company.find_by(

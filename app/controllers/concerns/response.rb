@@ -21,4 +21,8 @@ module Response
           }, status: status
     end
 
+    def collection_serializer( data , serializer )
+        ActiveModel::Serializer::CollectionSerializer.new( data , serializer: serializer)
+    end
+
 end

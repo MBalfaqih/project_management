@@ -11,6 +11,17 @@ class Task < ApplicationRecord
     scope :completed , lambda { where(status: "completed") }
     scope :pending   , lambda { where(status:  "pending" ) }
 
+    def reset_assignee_id
+        self.assignee_id = nil
+        save
+    end
+
+    def self.valid_creation( project , task_params )
+        @new_task = Task.new(task_params)
+        project.tasks << @new_task
+        @new_task.save
+    end
+
     private
 
     def presence_of_assignee_id_if_completed

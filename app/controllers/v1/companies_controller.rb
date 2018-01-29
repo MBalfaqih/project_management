@@ -1,6 +1,6 @@
 class V1::CompaniesController < ApplicationController
     
-    before_action :require_login , except: [:create , :index]
+    before_action :require_login , except: :create
 
 
     def show
@@ -11,7 +11,7 @@ class V1::CompaniesController < ApplicationController
     def create
         company = Company.new(company_params)
         if company.save
-        ###    CompanyMailer.welcome_email(company).deliver_now
+        ###    CompanyMailer.welcome_email(company).deliver_later
             company.regenerate_token
             render_success( message: "You successfully signed in" , data: V1::CompanySerializer.new(company) )
         else

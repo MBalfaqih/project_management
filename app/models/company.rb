@@ -17,7 +17,7 @@ class Company < ApplicationRecord
   has_many :employees
   has_many :projects
 
-  has_secure_password   validations: false 
+  has_secure_password  # validations: false 
   has_secure_token
   validates_confirmation_of :password
   validates :company_name , presence: true 
@@ -49,6 +49,10 @@ class Company < ApplicationRecord
     update_attributes(password: password , password_confirmation: password_confirmation)
   end
 
+  def self.logout(current_company)
+    current_company.update_columns(token: nil)
+  end
+  
   
   private
 

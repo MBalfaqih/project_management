@@ -5,7 +5,7 @@ class V1::EmployeesController < ApplicationController
     
 
     def index
-        render_success(data: ActiveModel::Serializer::CollectionSerializer.new(current_company.employees, serializer: V1::EmployeeSerializer))
+        render_success(data: collection_serializer(current_company.employees.order(:id), V1::EmployeeSerializer))
     end
 
   
@@ -37,7 +37,6 @@ class V1::EmployeesController < ApplicationController
 
     def destroy
         if @employee
-            ## set all his task to nil  ( nullify ) &&& when uncheck pro , what happen to task
             @employee.destroy! 
             render_success(message: "#{@employee.name} deleted successfully " )
         else
