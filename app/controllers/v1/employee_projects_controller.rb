@@ -9,7 +9,7 @@ class V1::EmployeeProjectsController < ApplicationController
     def update
         if updated_ids = params[:ids]
             updated_ids.map! { |id| id.to_i }
-            # return render_failed(message: " Invalid IDs assigned " , status: :unprocessable_entity )    if invalid_ids_assigned? == true  
+            # return render_failed(message: " Invalid IDs assigned " , status: :unprocessable_entity ) if invalid_ids_assigned? == true  
             EmployeesProject.update_employee_projects(updated_ids , @employee)
             render_success(message: "His projects has been updated successfully" ,data: V1::EmployeeSerializer.new(@employee))
         else 

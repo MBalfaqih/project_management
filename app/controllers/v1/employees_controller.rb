@@ -5,12 +5,12 @@ class V1::EmployeesController < ApplicationController
     
 
     def index
-        render_success(data: collection_serializer(current_company.employees.order(:id), V1::EmployeeSerializer))
+        render_success(data: collection_serializer(current_company.employees, V1::EmployeeSerializer))
     end
 
   
     def show
-        return render_success(data: V1::EmployeeSerializer.new(@employee)) if @employee
+        return render_success(data: V1::EmployeeDetailsSerializer.new(@employee)) if @employee
         render_failed(message: "You don't have record with id #{params[:id]}")
     end
 

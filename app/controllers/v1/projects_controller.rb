@@ -10,7 +10,7 @@ class V1::ProjectsController < ApplicationController
 
 
     def show
-        return render_success(data: V1::ProjectSerializer.new(@project)) if @project
+        return render_success(data: V1::ProjectDetailsSerializer.new(@project)) if @project
         render_failed(message: "You don't have record with id #{params[:id]}")
     end
 
