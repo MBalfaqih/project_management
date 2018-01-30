@@ -16,12 +16,12 @@ Rails.application.routes.draw do
 
     resources :employees do 
       resource :employee_projects , only: [:show , :update ]
-      resources :tasks  #except
+      resources :tasks  
     end 
 
     resources :projects do
       resource :project_employees , only: [:show , :update]
-      resources :tasks # execept
+      resources :tasks 
     end
 
   end
