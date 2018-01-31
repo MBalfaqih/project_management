@@ -1,10 +1,9 @@
 class V1::ProjectEmployeesSerializer < ActiveModel::Serializer
-  attributes :id , :name , :checked?
+  attributes :id, :name , :checked?
 
   def checked?
-    debugger
-    p = scope[:pro]
-    # object
-    true if p.employee_ids.include?(id)
+    selected_project= scope[:pro]
+    selected_project.employee_ids.include?(object.id) ? true : false
   end
+
 end

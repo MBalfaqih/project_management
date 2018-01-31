@@ -3,7 +3,9 @@ class V1::ProjectEmployeesController < ApplicationController
     before_action :require_login, :set_selected_project 
 
     def show
-        render_success(data:  collection_serializer(@project.employees , V1::EmployeeSerializer))
+        render_success( data: ActiveModel::Serializer::CollectionSerializer.new(
+            current_company.employees , serializer: V1::ProjectEmployeesSerializer , scope: {pro: @project} 
+        ))
     end
 
     def update

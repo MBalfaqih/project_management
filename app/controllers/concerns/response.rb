@@ -22,7 +22,7 @@ module Response
     end
 
     def collection_serializer( data , serializer )
-        ActiveModel::Serializer::CollectionSerializer.new( data , serializer: serializer)
+        ActiveModel::Serializer::CollectionSerializer.new( data , serializer: serializer )
     end
 
 end

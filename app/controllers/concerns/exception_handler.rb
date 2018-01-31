@@ -11,9 +11,9 @@ module ExceptionHandler
         render_failed( message: e.message , status: :unprocessable_entity)
       end
 
-      # rescue_from NoMethodError do |e|
-      #   render_failed( message: e.message , status: :unprocessable_entity)
-      # end
+      rescue_from NoMethodError do |e|
+        render_failed( message: e.message , status: :unprocessable_entity)
+      end
 
     end
   end
