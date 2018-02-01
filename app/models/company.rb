@@ -5,13 +5,17 @@ class Company < ApplicationRecord
 
   ############################################
 
+  attr_accessor :password_required
+
   has_secure_password   validations: false 
-  validates :company_name , presence: true
   has_secure_token
+  
+  validates_presence_of :company_name , :username
+  validates_presence_of :password , if: :password_required
+  
   validates_confirmation_of :password
-  validates :company_name, presence: true 
+  
   validates :username   , length: { maximum: 20 },
-                          presence: true  ,
                           uniqueness: true
 
   EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
@@ -34,7 +38,8 @@ class Company < ApplicationRecord
 
   def reset_password(password, password_confirmation)
     self.password_reset_token = nil
-    update_attributes(password: password , password_confirmation: password_confirmation)
+    update_attributes!(password: password , password_confirmation: password_confirmation)
+    # CompanyMailer.password_change_alert( self ).deliver_later
   end
 
   def self.logout(current_company)

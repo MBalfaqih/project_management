@@ -1,32 +1,28 @@
 class V1::SessionsController < ApplicationController
 
-  before_action :require_login , except: :create 
+  skip_before_action :require_login , only: :create 
 
   def create
     if company = valid_login?(params[:email] , params[:password])
       company.regenerate_token
-      render_success( message: "You logged in successfully"  , data: company)
+      render_success message: I18n.t("success_log_in"), data: company
     else
-      render_failed( message: "Invalid E-mail or password" , status: :unauthorized)
+      render_failed message: I18n.t("invalid_email_or_password") , status: :unauthorized
     end
   end
 
   def destroy
     Company.logout(current_company)
-    render_success( message: "logged out" , data: "https://example.com/login")
+    render_success message: I18n.t("logged_out") , data: "https://example.com/login"
   end
 
 
   private
 
-  
   def valid_login?(login_info , password)
-  company = Company.find_by(
-    login_info.include?("@") ? {email: login_info} : {username: login_info}
-    )
-    # company = Company.where(email: login_info).or(Company.where(username: login_info )).first
-    if company && company.authenticate(password)
-      company
-    end
+    company = Company.find_by!(
+      login_info.include?("@") ? {email: login_info} : {username: login_info})
+  
+    return company if company && company.authenticate(password)
   end
 end

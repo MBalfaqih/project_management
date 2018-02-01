@@ -1,20 +1,19 @@
 class V1::PasswordsController < ApplicationController
 
-    before_action :require_login , except: [ :forgot , :recover ]
+    skip_before_action :require_login , only: [ :forgot , :recover ]
 
     def forgot
-        if !email = params[:email]
-            return render_failed message: "Email can't be blank" , status: :not_found
+        unless email = params[:email]
+            return render_failed message: I18n.t("Email_can't_be_blank") , status: :not_found
         end
 
-        @company = Company.find_by( email.include?("@") ? { email: email } : { username: email } )
-
+        @company = Company.find_by( email.include?("@") ? { email: email } : { username: email })
         if @company 
             @company.generate_password_token
             CompanyMailer.recover_password_email(@company , @company.password_reset_token).deliver_later
-            render_success message: "Please check your e-mail and click the verification link we sent" 
+            render_success message: I18n.t("check_your_email") 
         else
-            render_failed message: 'Email address not found. Please check it and try again.' , status: :not_found
+            render_failed message: I18n.t('no_user_with_this_email') , status: :not_found
         end
     end
 
@@ -25,28 +24,23 @@ class V1::PasswordsController < ApplicationController
         if company
             if company.reset_password( params[:password] , params[:password_confirmation])
                 company.regenerate_token
-                render_success message: "Your password changed successfully" , data: company 
+                render_success message: I18n.t("password_changed_successfully") , data: company 
             else
                 render_failed message: company.errors.full_messages , status: :unprocessable_entity
             end
         else
-            render_failed message: "Link not valid or expired. Try generating a new link" , status: 404
+            render_failed message: I18n.t("Link_not_valid_or_expired") , status: 404
         end
-
     end
 
 
     def update
-
         if  current_company.authenticate(params[:old_password])
-            if  current_company.reset_password(params[:password], params[:password_confirmation])
-                ### CompanyMailer.password_change_alert(current_company).deliver_later
-                render_success message: "Your password changed successfully"
-            else
-                render_failed message: current_company.errors.full_messages , status: :unprocessable_entity
-            end
+            current_company.password_required = true
+            current_company.reset_password(params[:password], params[:password_confirmation])
+            render_success message: I18n.t("password_changed_successfully")
         else
-            render_failed message: "Your old password is not correct", status: :unauthorized
+            render_failed message:  I18n.t("old_password_not_correct") , status: :unauthorized
         end
     end
   

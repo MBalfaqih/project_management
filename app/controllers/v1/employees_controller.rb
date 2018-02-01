@@ -1,6 +1,5 @@
 class V1::EmployeesController < ApplicationController
 
-    before_action :require_login
     before_action :set_company_employee , except: [:index , :create ]
     
 
@@ -11,14 +10,15 @@ class V1::EmployeesController < ApplicationController
   
     def show
         return render_success(data: V1::EmployeeDetailsSerializer.new(@employee)) if @employee
-        render_failed(message: "You don't have record with id #{params[:id]}")
+        # render_failed(message: "You don't have record with id #{params[:id]}")
     end
 
 
     def create
         employee = Employee.new(employee_params)
         if current_company.employees << employee
-            render_success( message: "A new employee has been registered" , data: V1::EmployeeSerializer.new(employee) )
+            render_success message: I18n.t("new_employee_registered"),
+                              data: V1::EmployeeSerializer.new(employee)
         else
             render_failed( data: employee.errors.full_messages )
         end
@@ -26,22 +26,18 @@ class V1::EmployeesController < ApplicationController
 
 
     def update
-        if @employee
-            @employee.update!(employee_params)
-            render_success( message: " #{@employee.name} has been updated successfully " , data: V1::EmployeeSerializer.new(@employee))
-        else
-            render_failed(message: "There is no employee with id #{params[:id]}" , status: 404)
-        end
+        @employee.update!(employee_params)
+        render_success message: I18n.t("employee_updated_successfully"),
+                          data: V1::EmployeeSerializer.new(@employee)
     end
 
 
     def destroy
-        if @employee
-            @employee.destroy! 
-            render_success(message: "#{@employee.name} deleted successfully " )
-        else
-            render_failed(message: "can not delete record with id #{params[:id]}")
-        end
+        @employee.destroy!
+        render_success(message: I18n.t("employee_deleted_successfully") )
+        # else
+        #     render_failed(message: "can not delete record with id #{params[:id]}")
+        # end
     end
 
     private 
@@ -51,7 +47,7 @@ class V1::EmployeesController < ApplicationController
     end
 
     def set_company_employee
-        @employee =  current_company.employees.find_by(id: params[:id])
+        @employee =  current_company.employees.find(params[:id])
     end
     
 end

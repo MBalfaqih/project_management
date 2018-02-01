@@ -1,38 +1,35 @@
 class V1::TasksController < ApplicationController
 
-    before_action :require_login , :set_company_project #, :valid_project_id? 
+    before_action :set_company_project #, :valid_project_id? 
     before_action :set_selected_task  , except: [:index , :create]
     # before_action :valid_assignee_id? , only: [ :create , :update ]
 
     def index
-        render_success(data:  collection_serializer( @project.tasks.order(:id), V1::TaskSerializer))
+        render_success data: collection_serializer( @project.tasks.order(:id), V1::TaskSerializer)
     end
 
     def create
-        return render_success(message: "New task have been created successfully " ,
-                    data: collection_serializer(@project.tasks.order(:id), V1::TaskSerializer)) if Task.valid_creation(@project , task_params)
-        
-        render_failed(message: @new_task.errors.full_messages)
+        @project.tasks.create!(task_params)
+        render_success message: I18n.t("New_task_created_successfully"),
+                          data: collection_serializer(@project.tasks.order(:id), V1::TaskSerializer)
     end
 
     def update
-        if @task.update(task_params)
-            render_success(message: "#{@task.name} has been updated successfully" , data: V1::TaskSerializer.new(@task) )
-        else
-            render_failed(message: @task.errors.full_messages)
-        end
+        @task.update!(task_params)
+        render_success message: I18n.t("task_updated_successfully"),
+                          data: V1::TaskSerializer.new(@task)
     end
 
     def destroy
-        @task.destroy
-        render_success(message: "#{@task.name} deleted succesfully " )
+        @task.destroy!
+        render_success message: I18n.t("task_deleted_succesfully")
     end
   
 
     private
 
     def task_params
-        params.permit(:name , :description , :assignee_id  , :status)
+        params.permit(:name, :description, :assignee_id , :status)
     end
 
     def set_company_project

@@ -30,4 +30,48 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  # Company & Session
+  success_signed_in: "You signed-up successfully"
+
+  success_log_in: "You logged-in successfully"
+
+  invalid_email_or_password: Invalid email or password
+
+  logged_out: Logged out
+
+  profile_updated_successfully: Your profile updated successfully
+
+  # Emoloyee
+  employee_updated_successfully: This employee has been updated successfully
+
+  new_employee_registered: New employee has been registered successfully
+  
+  employee_deleted_successfully: Employee deleted successfully
+  # Password
+  Email_can't_be_blank: Email can't be blank 
+
+  check_your_email: please check your e-mail and click verfication link that we sent
+
+  no_user_with_this_email: Couldn't find user with this e-mail
+
+  password_changed_successfully: Your password changed successfully
+
+  Link_not_valid_or_expired: This Link not valid or expired, please generate another link 
+
+  old_password_not_correct: Your old password isn't correct 
+
+  # Project
+  project_updated_successfully: Project updated successfully 
+
+  new_project_registered: New project registered successfully
+
+  project_deleted_successfully: Project deleted successfully
+  
+  # Task
+  New_task_created_successfully: New task have been created
+
+  task_updated_successfully: This task updated successfully 
+
+  task_deleted_succesfully: Task updated successfully
+
+  assignee_id_must_exist: assignee_id must exist when status is (completed)
