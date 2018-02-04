@@ -11,9 +11,17 @@ module ExceptionHandler
         render_failed( message: e.message , status: :unprocessable_entity)
       end
 
-      rescue_from NoMethodError do |e|
-        render_failed( message: e.message , status: :unprocessable_entity)
+      rescue_from ActiveRecord::InvalidForeignKey do |e|
+        render_failed message: e.message , status: :unprocessable_entity
       end
 
+      # rescue_from NoMethodError do |e|
+      #   render_failed( message: e.message , status: :unprocessable_entity)
+      # end
+
+      # rescue_from NameError do |e|
+      #   render_failed( message: e.message , status: :unprocessable_entity)
+      # end
+      
     end
   end

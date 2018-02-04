@@ -5,7 +5,8 @@ class V1::TasksController < ApplicationController
     # before_action :valid_assignee_id? , only: [ :create , :update ]
 
     def index
-        render_success data: collection_serializer( @project.tasks.order(:id), V1::TaskSerializer)
+        @tasks = @project.tasks.order(:id).page(page).per(per_page)
+        render_data data: collection_serializer( @tasks, V1::TaskSerializer), pages: paginate(@tasks)
     end
 
     def create

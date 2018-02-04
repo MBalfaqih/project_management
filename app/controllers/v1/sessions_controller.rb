@@ -2,6 +2,7 @@ class V1::SessionsController < ApplicationController
 
   skip_before_action :require_login , only: :create 
 
+  # POST v1/sessions/
   def create
     if company = valid_login?(params[:email] , params[:password])
       company.regenerate_token
@@ -11,6 +12,7 @@ class V1::SessionsController < ApplicationController
     end
   end
 
+  # DELETE v1/sessions/
   def destroy
     Company.logout(current_company)
     render_success message: I18n.t("logged_out") , data: "https://example.com/login"

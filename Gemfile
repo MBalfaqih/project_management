@@ -21,6 +21,7 @@ gem 'puma', '~> 3.7'
 
  gem "paperclip", "~> 5.0.0"
  gem 'active_model_serializers'
+ gem 'kaminari'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

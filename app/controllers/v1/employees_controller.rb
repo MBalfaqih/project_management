@@ -1,10 +1,11 @@
 class V1::EmployeesController < ApplicationController
 
     before_action :set_company_employee , except: [:index , :create ]
-    
 
+    
     def index
-        render_success(data: collection_serializer(current_company.employees, V1::EmployeeSerializer))
+        @employees = current_company.employees.page(page).per(per_page)
+        render_data(data: collection_serializer(@employees, V1::EmployeeSerializer), pages: paginate(@employees))
     end
 
   
@@ -20,7 +21,7 @@ class V1::EmployeesController < ApplicationController
             render_success message: I18n.t("new_employee_registered"),
                               data: V1::EmployeeSerializer.new(employee)
         else
-            render_failed( data: employee.errors.full_messages )
+            render_failed data: employee.errors.full_messages 
         end
     end
 
@@ -34,7 +35,7 @@ class V1::EmployeesController < ApplicationController
 
     def destroy
         @employee.destroy!
-        render_success(message: I18n.t("employee_deleted_successfully") )
+        render_success message: I18n.t("employee_deleted_successfully") 
         # else
         #     render_failed(message: "can not delete record with id #{params[:id]}")
         # end
@@ -49,5 +50,7 @@ class V1::EmployeesController < ApplicationController
     def set_company_employee
         @employee =  current_company.employees.find(params[:id])
     end
+
+   
     
 end

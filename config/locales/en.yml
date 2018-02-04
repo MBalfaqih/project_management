@@ -47,6 +47,9 @@ en:
   new_employee_registered: New employee has been registered successfully
   
   employee_deleted_successfully: Employee deleted successfully
+
+  employee_projects_deleted: Employee projects deleted successfully
+
   # Password
   Email_can't_be_blank: Email can't be blank 
 
@@ -66,6 +69,8 @@ en:
   new_project_registered: New project registered successfully
 
   project_deleted_successfully: Project deleted successfully
+
+  project_employees_deleted: Project employees deleted  successfully
   
   # Task
   New_task_created_successfully: New task have been created

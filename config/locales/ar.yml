@@ -19,6 +19,8 @@ ar:
   
   employee_deleted_successfully: "تم حذف الموظف بنجاح" 
 
+  employee_projects_deleted: "تم حذف كافة مشاريع هذا الموظف"
+
   # Password
   Email_can't_be_blank: "حقل الإيميل لايمكن ان يكون فارغاً" 
 
@@ -38,6 +40,8 @@ ar:
   new_project_registered: "تم تسجيل مشروع جديد"
 
   project_deleted_successfully: "تم حذف المشروع بنجاح"
+
+  project_employees_deleted: "تم حذف كافة موظفي هذا المشروع"
 
   # Task
   New_task_created_successfully: "تم إنشاء مهمة جديدة"

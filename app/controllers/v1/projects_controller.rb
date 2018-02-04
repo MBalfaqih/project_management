@@ -2,9 +2,9 @@ class V1::ProjectsController < ApplicationController
 
     before_action :set_company_project ,  except: [:index , :create ]
 
-    
     def index
-        render_success(data: collection_serializer( current_company.projects, V1::ProjectSerializer ))
+        @projects = current_company.projects.page(page).per(per_page)
+        render_data(data: collection_serializer( @projects, V1::ProjectSerializer), pages: paginate(@projects))
     end
 
 
@@ -20,7 +20,7 @@ class V1::ProjectsController < ApplicationController
             render_success message: I18n.t("new_project_registered") , 
                               data: V1::ProjectSerializer.new(project) 
         else
-            render_failed( data: project.errors.full_messages )
+            render_failed data: project.errors.full_messages 
         end
     end
 

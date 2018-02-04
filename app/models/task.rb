@@ -6,7 +6,7 @@ class Task < ApplicationRecord
                                      message: "status must be either pending or completed"}
     
                                      
-    validate :presence_of_assignee_id_if_completed
+    validate :presence_of_assignee_id_if_completed #, on: create
 
     scope :completed , lambda { where(status: "completed") }
     scope :pending   , lambda { where(status:  "pending" ) }

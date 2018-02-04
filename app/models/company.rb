@@ -39,7 +39,6 @@ class Company < ApplicationRecord
   def reset_password(password, password_confirmation)
     self.password_reset_token = nil
     update_attributes!(password: password , password_confirmation: password_confirmation)
-    # CompanyMailer.password_change_alert( self ).deliver_later
   end
 
   def self.logout(current_company)

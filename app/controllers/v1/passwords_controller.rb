@@ -23,6 +23,7 @@ class V1::PasswordsController < ApplicationController
         company = Company.find_by(password_reset_token: token)
         if company
             if company.reset_password( params[:password] , params[:password_confirmation])
+                CompanyMailer.password_change_alert( self ).deliver_later
                 company.regenerate_token
                 render_success message: I18n.t("password_changed_successfully") , data: company 
             else
