@@ -2,19 +2,19 @@ class V1::EmployeesController < ApplicationController
 
     before_action :set_company_employee , except: [:index , :create ]
 
-    
+    # GET /v1/employees
     def index
         @employees = current_company.employees.page(page).per(per_page)
         render_data(data: collection_serializer(@employees, V1::EmployeeSerializer), pages: paginate(@employees))
     end
 
-  
+    # GET /v1/employees/:id
     def show
         return render_success(data: V1::EmployeeDetailsSerializer.new(@employee)) if @employee
         # render_failed(message: "You don't have record with id #{params[:id]}")
     end
 
-
+    # POST /v1/employees
     def create
         employee = Employee.new(employee_params)
         if current_company.employees << employee
@@ -25,14 +25,14 @@ class V1::EmployeesController < ApplicationController
         end
     end
 
-
+    # PUT /v1/employees/:id
     def update
         @employee.update!(employee_params)
         render_success message: I18n.t("employee_updated_successfully"),
                           data: V1::EmployeeSerializer.new(@employee)
     end
 
-
+    # DELETE /v1/employees/:id
     def destroy
         @employee.destroy!
         render_success message: I18n.t("employee_deleted_successfully") 

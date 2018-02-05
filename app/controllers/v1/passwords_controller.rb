@@ -2,6 +2,7 @@ class V1::PasswordsController < ApplicationController
 
     skip_before_action :require_login , only: [ :forgot , :recover ]
 
+    # POST /v1/passwords/forgot
     def forgot
         unless email = params[:email]
             return render_failed message: I18n.t("Email_can't_be_blank") , status: :not_found
@@ -17,7 +18,7 @@ class V1::PasswordsController < ApplicationController
         end
     end
 
-
+    # PUT /v1/passwords/recover
     def  recover
         token = params[:token]
         company = Company.find_by(password_reset_token: token)
@@ -34,7 +35,7 @@ class V1::PasswordsController < ApplicationController
         end
     end
 
-
+    # PUT /v1/passwords
     def update
         if  current_company.authenticate(params[:old_password])
             current_company.password_required = true

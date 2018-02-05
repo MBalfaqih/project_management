@@ -15,12 +15,12 @@ Rails.application.routes.draw do
       
       resources :employees do 
         resource :employee_projects , only: [:show , :update ]
-        resources :tasks  
+        #resources :tasks  
       end 
       
       resources :projects do
         resource :project_employees , only: [:show , :update]
-        resources :tasks 
+        resources :tasks , except: :show
       end
       
     end

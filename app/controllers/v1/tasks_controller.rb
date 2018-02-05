@@ -4,23 +4,27 @@ class V1::TasksController < ApplicationController
     before_action :set_selected_task  , except: [:index , :create]
     # before_action :valid_assignee_id? , only: [ :create , :update ]
 
+    # GET /v1/projects/:project_id/tasks
     def index
         @tasks = @project.tasks.order(:id).page(page).per(per_page)
         render_data data: collection_serializer( @tasks, V1::TaskSerializer), pages: paginate(@tasks)
     end
 
+    # POST /v1/projects/:project_id/tasks
     def create
         @project.tasks.create!(task_params)
         render_success message: I18n.t("New_task_created_successfully"),
                           data: collection_serializer(@project.tasks.order(:id), V1::TaskSerializer)
     end
 
+    # PUT /v1/projects/:project_id/tasks/:id
     def update
         @task.update!(task_params)
         render_success message: I18n.t("task_updated_successfully"),
                           data: V1::TaskSerializer.new(@task)
     end
 
+    # DELETE /v1/projects/:project_id/tasks/:id
     def destroy
         @task.destroy!
         render_success message: I18n.t("task_deleted_succesfully")

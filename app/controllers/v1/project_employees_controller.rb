@@ -2,6 +2,7 @@ class V1::ProjectEmployeesController < ApplicationController
 
     before_action :set_selected_project 
 
+    # GET /v1/projects/:project_id/project_employees
     def show
         pro_employees = current_company.employees.page(page).per(per_page)
         render_data( data: collection_serializer( pro_employees, 
@@ -12,6 +13,7 @@ class V1::ProjectEmployeesController < ApplicationController
         )
     end
 
+    # PUT /v1/projects/:project_id/project_employees
     def update
         if updated_ids = params[:ids]
             updated_ids.map! { |id| id.to_i }

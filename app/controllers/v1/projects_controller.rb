@@ -2,18 +2,19 @@ class V1::ProjectsController < ApplicationController
 
     before_action :set_company_project ,  except: [:index , :create ]
 
+    # GET /v1/projects
     def index
         @projects = current_company.projects.page(page).per(per_page)
         render_data(data: collection_serializer( @projects, V1::ProjectSerializer), pages: paginate(@projects))
     end
 
-
+    # GET /v1/projects/:id
     def show
         return render_success(data: V1::ProjectDetailsSerializer.new(@project)) if @project
         # render_failed(message: "You don't have record with id #{params[:id]}")
     end
 
-
+    # POST /v1/projects
     def create
         project = Project.new(project_params)
         if current_company.projects << project
@@ -24,14 +25,14 @@ class V1::ProjectsController < ApplicationController
         end
     end
 
-
+    #PUT /v1/projects/:id
     def update
         @project.update!(project_params)
         render_success message: I18n.t("project_updated_successfully"),
                           data: V1::ProjectSerializer.new(@project)
     end
 
-
+    # DELETE /v1/projects/:id
     def destroy
         @project.destroy! 
         render_success message: I18n.t("project_deleted_successfully")
