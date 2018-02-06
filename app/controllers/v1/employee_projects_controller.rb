@@ -9,7 +9,7 @@ class V1::EmployeeProjectsController < ApplicationController
                                                   V1::EmployeeProjectsSerializer, 
                                                   scope: {emp: @employee}
                                                 ),
-                    pages: paginate(emp_projects)
+                     pages: paginate(emp_projects)
         )
     end
 
@@ -18,10 +18,12 @@ class V1::EmployeeProjectsController < ApplicationController
         if updated_ids = params[:ids]
             updated_ids.map! { |id| id.to_i }
             EmployeesProject.update_employee_projects(updated_ids , @employee)
+
             render_success message: I18n.t("employee_updated_successfully"),
                               data: V1::EmployeeDetailsSerializer.new(@employee)  
         else 
             EmployeesProject.remove_unchecked_projects(@employee.project_ids , @employee)
+            
             render_success message: I18n.t("employee_projects_deleted"),
                               data: V1::EmployeeDetailsSerializer.new(@employee)
         end

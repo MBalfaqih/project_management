@@ -30,9 +30,12 @@ module ProjectManagement
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # I18n configurations
     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
 
+    # Set Resque as queue adapter
+    config.active_job.queue_adapter = :resque
 
   end
 end

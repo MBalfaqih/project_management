@@ -11,9 +11,10 @@ class V1::CompaniesController < ApplicationController
     def create
         company = Company.new(company_params)
         company.save!
-        CompanyMailer.welcome_email(company).deliver_later
+        # CompanyMailer.welcome_email(company).deliver_later
+        MailingJob.perform_later(company: company , mail_type: "welcome_email")
         company.regenerate_token
-        render_success( message: I18n.t("signed_in") , data: V1::CompanySerializer.new(company))
+        render_success( message: I18n.t("signed_in"), data: V1::CompanySerializer.new(company))
     end
 
     # PUT /v1/companies

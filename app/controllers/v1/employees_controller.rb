@@ -10,8 +10,7 @@ class V1::EmployeesController < ApplicationController
 
     # GET /v1/employees/:id
     def show
-        return render_success(data: V1::EmployeeDetailsSerializer.new(@employee)) if @employee
-        # render_failed(message: "You don't have record with id #{params[:id]}")
+        render_success(data: V1::EmployeeDetailsSerializer.new(@employee)) if @employee
     end
 
     # POST /v1/employees
@@ -36,9 +35,6 @@ class V1::EmployeesController < ApplicationController
     def destroy
         @employee.destroy!
         render_success message: I18n.t("employee_deleted_successfully") 
-        # else
-        #     render_failed(message: "can not delete record with id #{params[:id]}")
-        # end
     end
 
     private 

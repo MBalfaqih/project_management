@@ -2,7 +2,7 @@
 
 ar:
   # Company & Session
-  success_signed_in: "تم نسجيلك بنجاح"
+  signed_in: "تم نسجيلك بنجاح"
 
   success_log_in: "تم تسجيل دخولك بنجاح"
 

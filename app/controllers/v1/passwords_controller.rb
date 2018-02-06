@@ -11,7 +11,8 @@ class V1::PasswordsController < ApplicationController
         @company = Company.find_by( email.include?("@") ? { email: email } : { username: email })
         if @company 
             @company.generate_password_token
-            CompanyMailer.recover_password_email(@company , @company.password_reset_token).deliver_later
+            # CompanyMailer.recover_password_email(@company , @company.password_reset_token).deliver_later
+            MailingJob.perform_later(@company , mail_type: "recover_password_email")
             render_success message: I18n.t("check_your_email") 
         else
             render_failed message: I18n.t('no_user_with_this_email') , status: :not_found
@@ -24,7 +25,8 @@ class V1::PasswordsController < ApplicationController
         company = Company.find_by(password_reset_token: token)
         if company
             if company.reset_password( params[:password] , params[:password_confirmation])
-                CompanyMailer.password_change_alert( self ).deliver_later
+                # CompanyMailer.password_change_alert(company).deliver_later
+                MailingJob.perform_later(company , mail_type: "password_change_alert")
                 company.regenerate_token
                 render_success message: I18n.t("password_changed_successfully") , data: company 
             else
