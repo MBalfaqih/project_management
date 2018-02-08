@@ -20,10 +20,10 @@ gem 'redis', '~> 3.0'
  gem 'bcrypt', '~> 3.1.7'
 
  gem "paperclip", "~> 5.0.0"
- gem 'active_model_serializers'
- gem 'kaminari'
- gem 'resque'
- gem 'resque-scheduler'
+ gem 'active_model_serializers' 
+ gem 'kaminari'  # for pagination
+ gem 'resque'      # background jobs
+ gem 'resque-scheduler'   # job scheduling
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

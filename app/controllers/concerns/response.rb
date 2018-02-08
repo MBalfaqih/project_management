@@ -1,6 +1,6 @@
 module Response
 
-    def render_data(message: 'Loaded successfuly', data: nil , pages: pages)
+    def render_data(message: I18n.t('Loaded_successfuly'), data: nil , pages: pages)
         render json: {
                         message: message,
                         data:    data,
@@ -9,7 +9,7 @@ module Response
         }, status: status
     end
     
-    def render_success(message: 'success', data: nil, status: :ok)
+    def render_success(message: I18n.t('success'), data: nil, status: :ok)
         # message = data.nil? ? "no record founds" : "success"
         render json: {
                         success: true,
@@ -19,7 +19,7 @@ module Response
         }, status: status
     end
     
-      def render_failed(message: "Failed", data: nil, status: :unprocessable_entity)
+      def render_failed(message: I18n.t("Failed"), data: nil, status: :unprocessable_entity)
         render json: {
                         success: false,
                         message: message,

@@ -1,5 +1,9 @@
+require 'resque/server'
+require 'resque/scheduler/server'
+
 Rails.application.routes.draw do
   
+  mount Resque::Server.new, at: '/resque'
 
   scope "(:locale)", locale: /en|ar/ do
     namespace 'v1' do
@@ -9,13 +13,12 @@ Rails.application.routes.draw do
       resource :companies , only: [:create , :show , :update ]
       
       resource :passwords , only: [:forgot , :recover , :update] do 
-        post :forgot #,  on: :collection
-        put :recover  # , on: :member
+        post :forgot
+        put :recover
       end
       
       resources :employees do 
         resource :employee_projects , only: [:show , :update ]
-        #resources :tasks  
       end 
       
       resources :projects do

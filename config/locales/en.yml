@@ -30,8 +30,14 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  Loaded_successfuly: Loaded successfuly
+
+  success: success
+
+  Failed: Failed
+
   # Company & Session
-  success_signed_in: "You signed-up successfully"
+  signed_in: "You signed-up successfully"
 
   success_log_in: "You logged-in successfully"
 

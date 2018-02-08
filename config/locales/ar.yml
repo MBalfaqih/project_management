@@ -1,6 +1,12 @@
 
 
 ar:
+  Loaded_successfuly: تم تحميل البيانات بنجاح
+
+  success: تمت العملية بنجاح
+
+  Failed: فشلت العملية
+
   # Company & Session
   signed_in: "تم نسجيلك بنجاح"
 

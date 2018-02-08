@@ -4,16 +4,13 @@ class V1::CompaniesController < ApplicationController
 
     # GET /v1/companies
     def show
-        render_success(data: V1::CompanySerializer.new(current_company))
+        render_success data: V1::CompanySerializer.new(current_company)
     end
 
     # POST /v1/companies
     def create
-        company = Company.new(company_params)
-        company.save!
-        # CompanyMailer.welcome_email(company).deliver_later
-        MailingJob.perform_later(company: company , mail_type: "welcome_email")
-        company.regenerate_token
+        company = Company.create!(company_params)
+        Resque.enqueue(SendWelcome, company.id)
         render_success( message: I18n.t("signed_in"), data: V1::CompanySerializer.new(company))
     end
 
