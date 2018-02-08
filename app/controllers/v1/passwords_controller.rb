@@ -3,18 +3,15 @@ class V1::PasswordsController < ApplicationController
     skip_before_action :require_login , only: [ :forgot , :recover ]
 
     # POST /v1/passwords/forgot
-    def forgot
-        unless email = params[:email]
-            return render_failed message: I18n.t("Email_can't_be_blank") , status: :not_found
-        end
-
+    def forgot        
+        return render_failed(message: I18n.t("Email_can't_be_blank") , status: :not_found) unless email = params[:email]
+        
         if @company = Company.find_by( email.include?("@") ? { email: email } : { username: email })
             @company.generate_password_token
             Resque.enqueue(SendRecoverPassword, @company.id)
             render_success message: I18n.t("check_your_email") 
         else
-            render_failed message: I18n.t('no_user_with_this_email') , status: :not_found
-        end
+            render_failed message: I18n.t('no_user_with_this_email') , status: :not_found end
     end
 
     # PUT /v1/passwords/recover

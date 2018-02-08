@@ -34,9 +34,9 @@ module Response
             ActiveModel::Serializer::CollectionSerializer.new( data , serializer: serializer )
         else
             ActiveModel::Serializer::CollectionSerializer.new(
-                        data , 
+            data , 
             serializer: serializer, 
-                 scope: scope )
+            scope:      scope )
         end
     end
 

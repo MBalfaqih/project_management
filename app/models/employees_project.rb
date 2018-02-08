@@ -23,6 +23,7 @@ class EmployeesProject < ApplicationRecord
         employee.projects.destroy(*unchecked_ids) 
     end
 
+
     def self.assign_new_projects(new_assigned_ids , employee )
         new_assigned_ids.each { |id| employee.employees_projects.create!(project_id: id)}
     end
