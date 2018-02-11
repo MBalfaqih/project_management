@@ -81,6 +81,7 @@ ar:
         token: الرمز
         password_digest: شفرة كلمة المرور
         password_reset_token: شفرة إعادة ضبط كلمة المرور
+        logo: الصورة
         logo_file_name: اسم ملف الشعار
         logo_content_type: نوع محتوى الشعار
         logo_file_size: حجم ملف الشعار

@@ -24,6 +24,7 @@ gem 'redis', '~> 3.0'
  gem 'kaminari'  # for pagination
  gem 'resque'      # background jobs
  gem 'resque-scheduler'   # job scheduling
+ gem 'ransack' # Searching
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
