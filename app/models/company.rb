@@ -38,11 +38,12 @@ class Company < ApplicationRecord
 
   def reset_password(password, password_confirmation)
     self.password_reset_token = nil
+    self.password_required = true
     update_attributes!(password: password , password_confirmation: password_confirmation)
   end
 
-  def self.logout(current_company)
-    current_company.update_columns(token: nil)
+  def logout
+    self.update_column(:token, nil)
   end
   
   

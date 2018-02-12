@@ -2,10 +2,12 @@ class V1::CompaniesController < ApplicationController
     
     skip_before_action :require_login , only: :create
 
+
     # GET /v1/companies
     def show
         render_success data: V1::CompanySerializer.new(current_company)
     end
+
 
     # POST /v1/companies
     def create
@@ -14,12 +16,13 @@ class V1::CompaniesController < ApplicationController
         render_success( message: I18n.t("signed_in"), data: V1::CompanySerializer.new(company))
     end
 
+
     # PUT /v1/companies
     def update
-        current_company.update!(company_params)
         render_success message: I18n.t("profile_updated_successfully"),
-                          data: V1::CompanySerializer.new(current_company)
+                       data:    V1::CompanySerializer.new(current_company) if current_company.update!(company_params)
     end
+    
     
 
     private 

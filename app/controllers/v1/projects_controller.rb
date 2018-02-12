@@ -8,10 +8,12 @@ class V1::ProjectsController < ApplicationController
         render_data(data: collection_serializer( @projects, V1::ProjectSerializer), pages: paginate(@projects))
     end
 
+
     # GET /v1/projects/:id
     def show
         return render_success(data: V1::ProjectDetailsSerializer.new(@project)) if @project
     end
+
 
     # POST /v1/projects
     def create
@@ -23,6 +25,7 @@ class V1::ProjectsController < ApplicationController
             render_failed data: project.errors.full_messages 
         end
     end
+    
 
     #PUT /v1/projects/:id
     def update
@@ -31,6 +34,7 @@ class V1::ProjectsController < ApplicationController
                        data:    V1::ProjectSerializer.new(@project)
     end
 
+    
     # DELETE /v1/projects/:id
     def destroy
         @project.destroy! 

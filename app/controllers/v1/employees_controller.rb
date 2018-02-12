@@ -8,22 +8,23 @@ class V1::EmployeesController < ApplicationController
         render_data(data: collection_serializer(@employees, V1::EmployeeSerializer), pages: paginate(@employees))
     end
 
+
     # GET /v1/employees/:id
     def show
         render_success(data: V1::EmployeeDetailsSerializer.new(@employee)) if @employee
     end
 
+
     # POST /v1/employees
     def create
         employee = Employee.new(employee_params)
-        if current_company.employees << employee
-            render_success message: I18n.t("new_employee_registered"),
-                           data:    V1::EmployeeSerializer.new(employee)
-        else
-            render_failed data: employee.errors.full_messages 
-        end
+        current_company.employees << employee
+
+        render_success message: I18n.t("new_employee_registered"),
+                       data:    V1::EmployeeSerializer.new(employee) 
     end
 
+    
     # PUT /v1/employees/:id
     def update
         @employee.update!(employee_params)
@@ -36,6 +37,9 @@ class V1::EmployeesController < ApplicationController
         @employee.destroy!
         render_success message: I18n.t("employee_deleted_successfully") 
     end
+
+
+
 
     private 
 

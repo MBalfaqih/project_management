@@ -10,8 +10,8 @@ class V1::PasswordsController < ApplicationController
             @company.generate_password_token
             Resque.enqueue(SendRecoverPassword, @company.id)
             render_success message: I18n.t("check_your_email") 
-        else
-            render_failed message: I18n.t('no_user_with_this_email') , status: :not_found end
+        else render_failed message: I18n.t('no_user_with_this_email') , status: :not_found 
+        end
     end
 
     # PUT /v1/passwords/recover
@@ -29,11 +29,9 @@ class V1::PasswordsController < ApplicationController
     # PUT /v1/passwords
     def update
         if  current_company.authenticate(params[:old_password])
-            current_company.password_required = true
             current_company.reset_password(params[:password], params[:password_confirmation])
             render_success message: I18n.t("password_changed_successfully")
-        else
-            render_failed message:  I18n.t("old_password_not_correct") , status: :unauthorized
+        else render_failed message: I18n.t("old_password_not_correct") , status: :unauthorized
         end
     end
   

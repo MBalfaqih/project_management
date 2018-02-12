@@ -14,7 +14,7 @@ class V1::SessionsController < ApplicationController
 
   # DELETE v1/sessions/
   def destroy
-    Company.logout(current_company)
+    current_company.logout
     render_success message: I18n.t("logged_out") , data: "https://example.com/login"
   end
 

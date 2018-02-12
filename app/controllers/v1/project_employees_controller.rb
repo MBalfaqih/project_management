@@ -19,13 +19,11 @@ class V1::ProjectEmployeesController < ApplicationController
             updated_ids.map! { |id| id.to_i }
             EmployeesProject.update_project_employees( updated_ids , @project)
 
-            render_success message: I18n.t("project_updated_successfully"),
-                           data:    V1::ProjectDetailsSerializer.new(@project)
+            render_success message: I18n.t("project_updated_successfully"), data: V1::ProjectDetailsSerializer.new(@project)
         else 
             EmployeesProject.remove_unchecked_employees(@project.employee_ids, @project )
             
-            render_success message: I18n.t("project_employees_deleted"),
-                           data:    V1::ProjectDetailsSerializer.new(@project)
+            render_success message: I18n.t("project_employees_deleted"), data: V1::ProjectDetailsSerializer.new(@project)
         end
     end
 
