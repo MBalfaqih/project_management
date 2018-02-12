@@ -1,4 +1,5 @@
 class Employee < ApplicationRecord
+    extend Enumerize
     
     belongs_to :company
     has_many :employees_projects
@@ -14,6 +15,7 @@ class Employee < ApplicationRecord
 
     ############################################
 
+    enumerize :gender, in: [:male, :female]
 
     private
     def must_be_over_twenty

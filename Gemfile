@@ -25,6 +25,7 @@ gem 'redis', '~> 3.0'
  gem 'resque'      # background jobs
  gem 'resque-scheduler'   # job scheduling
  gem 'ransack' # Searching
+ gem 'enumerize'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

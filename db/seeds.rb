@@ -12,3 +12,9 @@
 # 27.times do |i|
     # Employee.create(company_id: 5 , name:"test #{i+1}" ,joining_date:  "1/1/2000" , birth_date: "1/1/1992")
 # end
+
+
+# Employee.all.each do |e|
+#     e.gender = :male
+#     e.save
+# end
