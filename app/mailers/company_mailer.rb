@@ -5,6 +5,7 @@ class CompanyMailer < ApplicationMailer
     def welcome_email(company)
         @company = company
         @url  = 'localhost:3000/v1/sessions/'
+        attachments["ico.png"] = File.read("#{Rails.root}/public/images/ico.png")
         mail(to: @company.email, subject: 'Thanks for registeration')
     end
 

@@ -23,7 +23,8 @@ class V1::PasswordsController < ApplicationController
                 render_success message: I18n.t("password_changed_successfully") , data: company 
             else render_failed message: company.errors.full_messages , status: :unprocessable_entity
             end
-        else render_failed message: I18n.t("Link_not_valid_or_expired") , status: 404 end
+        else render_failed message: I18n.t("Link_not_valid_or_expired") , status: 404 
+        end
     end
 
     # PUT /v1/passwords
