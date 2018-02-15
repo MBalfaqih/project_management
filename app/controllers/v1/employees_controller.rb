@@ -53,9 +53,10 @@ class V1::EmployeesController < ApplicationController
 
     def set_company_employees
         @q         = current_company.employees.ransack(params[:q])
-        @employees = @q.result.page(page).per(per_page)
+        @employees = @q.result
+                       .page(page)
+                       .per(per_page)
+                       .order(column_name(params[:sort_by], model_name: Employee) + " " + direction(params[:direction]))
     end
-
-   
     
 end

@@ -48,7 +48,10 @@ class V1::TasksController < ApplicationController
 
     def set_project_tasks
         @q = @project.tasks.ransack(params[:q])
-        @tasks = @q.result.order(:id).page(page).per(per_page)
+        @tasks = @q.result
+                   .page(page)
+                   .per(per_page)
+                   .order(column_name(params[:sort_by], model_name: Task) + " " + direction(params[:direction]))
     end
 
     # def valid_project_id?

@@ -30,14 +30,10 @@ module Response
 
     
     def collection_serializer(  data , serializer , scope: nil )
-        if scope == nil 
-            ActiveModel::Serializer::CollectionSerializer.new( data , serializer: serializer )
-        else
-            ActiveModel::Serializer::CollectionSerializer.new(
-            data , 
-            serializer: serializer, 
-            scope:      scope )
-        end
+        ActiveModel::Serializer::CollectionSerializer.new(
+        data , 
+        serializer: serializer, 
+        scope:      scope )
     end
 
 end
