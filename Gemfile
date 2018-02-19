@@ -21,12 +21,14 @@ gem 'redis', '~> 3.0'
 
  gem "paperclip", "~> 5.0.0"
  gem 'active_model_serializers' 
- gem 'kaminari'  # for pagination
- gem 'resque'      # background jobs
- gem 'resque-scheduler'   # job scheduling
- gem 'ransack' # Searching
+ gem 'kaminari'          # for pagination
+ gem 'resque'            # background jobs
+ gem 'resque-scheduler'  # job scheduling
+ gem 'ransack'           # Searching
  gem 'enumerize'
-
+ gem 'wicked_pdf'        # Generate pdf files
+ gem 'wkhtmltopdf-binary'# Generate pdf files
+ gem 'awesome_print', :require => 'ap'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

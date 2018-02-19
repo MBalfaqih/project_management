@@ -6,7 +6,19 @@ class CompanyMailer < ApplicationMailer
         @company = company
         @url  = 'localhost:3000/v1/sessions/'
         attachments["ico.png"] = File.read("#{Rails.root}/public/images/ico.png")
+
         mail(to: @company.email, subject: 'Thanks for registeration')
+    end
+
+    def send_report(company, report)
+        @company = company
+
+        attachments["report_#{Time.now}.pdf"] = {
+            mime_type: "application/pdf",
+            content: report
+        }
+
+        mail(to: @company.email, subject: "Report")
     end
 
     def recover_password_email(company,token)

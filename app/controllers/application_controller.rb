@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
   include ExceptionHandler
   include Pagination
   include DynamicSort
+  include ActionController::MimeResponds
   
   def require_login
     authenticate_token || render_failed(message: "access denied , You are NOT logged in yet" , status: 401 )
