@@ -39,15 +39,27 @@ Rails.application.configure do
 
   # config.action_mailer.delivery_method = :letter_opener
 
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  # address:              'smtp.gmail.com',
+  # port:                 587,
+  # domain:               'example.com',
+  # user_name:            Rails.application.secrets.my_gmail ,
+  # password:             Rails.application.secrets.my_password,
+  # authentication:       'plain',
+  # enable_starttls_auto: true  }
+
+  # SendGrid Configurations:
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  address:              'smtp.gmail.com',
-  port:                 587,
-  domain:               'example.com',
-  user_name:            Rails.application.secrets.my_gmail ,
-  password:             Rails.application.secrets.my_password,
-  authentication:       'plain',
-  enable_starttls_auto: true  }
+    address:            	"smtp.sendgrid.net",
+    port: 	              587,
+    domain:               'sendgrid.com',
+    user_name:          	Rails.application.secrets.send_grid_username,
+    password: 	          Rails.application.secrets.send_grid_password,
+    authentication:       'plain',
+    enable_starttls_auto: true 
+  }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
