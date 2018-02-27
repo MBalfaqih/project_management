@@ -3,9 +3,19 @@ class V1::EmployeesController < ApplicationController
     before_action :set_company_employees, only: :index
     before_action :set_employee, except: [:index , :create ]
 
+    power :employees, map: {
+        [:index]   => :list_employees,
+        [:show]    => :user_show,
+        [:create]  => :creatable_user,
+        [:update]  => :updatable_user,
+        [:destroy] => :destroyable_employee
+      }, as: :employees_scope
+
+
     # GET /v1/employees
     def index
-        render_data(data: collection_serializer(@employees, V1::EmployeeSerializer), pages: paginate(@employees))
+        debugger
+        render_data(data: collection_serializer(employees_scope, V1::EmployeeSerializer), pages: paginate(@employees))
     end
 
 
